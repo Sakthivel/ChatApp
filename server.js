@@ -55,10 +55,6 @@ var delivery = dl.listen(socket);
 
 
 
-
-
-
-
 	users += 1; // Add 1 to the count
 	reloadUsers(); // Send the count to all the users
 
@@ -102,7 +98,7 @@ var delivery = dl.listen(socket);
 			});
 			var index = pseudoArray.indexOf(pseudo);
 			pseudoArray.slice(index);
-			//io.sockets.emit('userslist', {"ulist": pseudoArray});
+			io.sockets.emit('userslist', {"ulist": pseudoArray});
 		}
 	});
 });

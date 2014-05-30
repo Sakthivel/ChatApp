@@ -30,7 +30,7 @@ $(function() {
 
 	messageContainer = $('#messageInput');
 	submitButton = $("#submit");
-$(".chat-list").slimScroll({height: '500px'});
+$(".chat-list,.chat-inbox").slimScroll({height: '500px'});
 	$("#pseudoSubmit").click(function() {setPseudo()});
 	submitButton.click(function() {sentMessage();});
 
