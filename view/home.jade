@@ -1,0 +1,62 @@
+doctype html
+html
+	head
+		title Chat
+		link(rel="stylesheet", href="style.css")
+		script(src='http://code.jquery.com/jquery-1.7.1.min.js')
+		script(src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js')
+		script(src="/socket.io/socket.io.js")
+		script(src="delivery.js")
+		script(src="script.js")
+		
+
+
+	body
+
+			div.container#main
+					div.row
+							div.col-lg-4.col-md-5.col-sm-6
+										section.tile.transparent
+													div.tile-header.bg-transparent-black-5.rounded-top-corners
+																			h5 Online users
+																				span.badge.badge-red 3
+													div.tile-body.color.transparent-black.rounded-bottom-corners.nopadding
+																		ul.chat-inbox#chat-inbox
+																				
+
+							div.col-lg-8.col-md-7.col-sm-6 
+										section.tile.transparent
+													div.tile-header.bg-transparent-black-5.rounded-top-corners
+													div.tile-body.color.transparent.rounded-bottom-corners.nopadding
+																	div.chat-content#chat-content
+																				ul.chat-list
+																						
+													div.tile-footer.transparent.nopadding 
+															div.chat-reply#chat-reply
+																	textarea#messageInput(placeholder="Type your message here.....")
+																	input(type='file',name='file')#fileAttach
+
+																	div.btn-group.btn-group-sm
+																			button(type="button")#submit.btn.btn-transparent-white.last.pull-right  Send
+			div.modal.fade#modalPseudo
+					div.modal-dialog
+						div.modal-content
+								div.modal-header
+									h3 Choose a name
+								div.modal-body
+									p Choose a name :
+									input(type='text')#pseudoInput.form-control
+									div.alert.alert-error#alertPseudo
+										| This name is already used ! Choose another one.
+								div.modal-footer
+									button.btn.btn-primary#pseudoSubmit Go to the chat
+
+
+
+
+
+
+
+
+
+
