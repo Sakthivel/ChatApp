@@ -19,7 +19,6 @@ app.set('view engine', 'jade');
 app.set("view options", { layout: false });
 
 
-
 app.use(express.static(__dirname + '/public'));
 
 
@@ -33,7 +32,7 @@ app.get('/', function(req, res){
 console.log("Server listening on port 16558");
 
 
-var users = 0; //count the users
+var usernames = {};
 
 io.sockets.on('connection', function (socket) { // First connection
 
@@ -54,9 +53,12 @@ var delivery = dl.listen(socket);
   });
 
 
+	socket.on("typing", function(data) { 
 
-	users += 1; // Add 1 to the count
-	reloadUsers(); // Send the count to all the users
+		//console.log(data.name);
+		 io.sockets.emit("isTyping", {isTyping: data.status, name :data.name});
+	});
+	
 
 	socket.on('message', function (data) { // Broadcast the message to all
 		if(pseudoSet(socket))
@@ -71,15 +73,20 @@ var delivery = dl.listen(socket);
 		{
 			socket.set('pseudo', data, function(){
 
+				//users += 1; // Add 1 to the count
+				//reloadUsers(); // Send the count to all the users
+				console.log(socket.id);
 				socket.username = data;
+				usernames[data] = data;
+
 				
-				pseudoArray.push(data);
+				//pseudoArray.push(data);
 				socket.emit('pseudoStatus', 'ok');
 				console.log("user " + data + " connected");
-				io.sockets.emit('connedUser',data);
+				io.sockets.emit('connedUser',data + '  joined conversation at');
 				
 
-				io.sockets.emit('userslist', {"ulist": pseudoArray});
+				io.sockets.emit('userslist', usernames);
 			});
 		}
 		else
@@ -88,25 +95,21 @@ var delivery = dl.listen(socket);
 		}
 	});
 	socket.on('disconnect', function () { // Disconnection of the client
-		users -= 1;
-		reloadUsers();
+		
 		if (pseudoSet(socket))
 		{
-			var pseudo;
-			socket.get('pseudo', function(err, name) {
-				pseudo = name;
-			});
-			var index = pseudoArray.indexOf(pseudo);
-			pseudoArray.slice(index);
-			io.sockets.emit('userslist', {"ulist": pseudoArray});
+			delete usernames[socket.username];
+		// update list of users in chat, client-side
+		io.sockets.emit('userslist', usernames);
+		// echo globally that this client has left
+		socket.broadcast.emit('connedUser', socket.username + ' has disconnected');
+			
+			
 		}
 	});
 });
 
-function reloadUsers() { // Send the count of the users to all
-	io.sockets.emit('nbUsers', {"nb": users});
 
-}
 function pseudoSet(socket) { // Test if the user has a name
 	var test;
 	socket.get('pseudo', function(err, name) {

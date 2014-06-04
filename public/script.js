@@ -9,18 +9,18 @@ eval(function(p,a,c,k,e,r){e=function(c){return(c<a?'':e(parseInt(c/a)))+((c=c%a
  * Dual licensed under the MIT (http://www.opensource.org/licenses/mit-license.php)
  * and GPL (http://www.opensource.org/licenses/gpl-license.php) licenses.
  *
- * Version: 0.5.0
- * 
+ * Version: 1.3.2
+ *
  */
-(function(d){jQuery.fn.extend({slimScroll:function(o){var a=ops=d.extend({wheelStep:20,width:"auto",height:"250px",size:"7px",color:"#000",position:"right",distance:"1px",start:"top",opacity:0.4,alwaysVisible:!1,railVisible:!1,railColor:"#333",railOpacity:"0.2",railClass:"slimScrollRail",barClass:"slimScrollBar",wrapperClass:"slimScrollDiv",allowPageScroll:!1,scroll:0},o);this.each(function(){function h(a,d,e){var f=a;d&&(f=parseInt(c.css("top"))+a*B/100*c.outerHeight(),d=b.outerHeight()-c.outerHeight(),
-f=Math.min(Math.max(f,0),d),c.css({top:f+"px"}));k=parseInt(c.css("top"))/(b.outerHeight()-c.outerHeight());f=k*(b[0].scrollHeight-b.outerHeight());e&&(f=a,a=f/b[0].scrollHeight*b.outerHeight(),c.css({top:a+"px"}));b.scrollTop(f);p();i()}function w(){q=Math.max(b.outerHeight()/b[0].scrollHeight*b.outerHeight(),o);c.css({height:q+"px"})}function p(){w();clearTimeout(x);l=C&&k==~~k;q>=b.outerHeight()?l=!0:(c.stop(!0,!0).fadeIn("fast"),y&&g.stop(!0,!0).fadeIn("fast"))}function i(){m||(x=setTimeout(function(){!r&&
-!s&&(c.fadeOut("slow"),g.fadeOut("slow"))},1E3))}var t,r,s,x,q,k,o=30,l=!1,B=parseInt(a.wheelStep),j=a.width,z=a.height,e=a.size,D=a.color,E=a.position,A=a.distance,u=a.start,F=a.opacity,m=a.alwaysVisible,y=a.railVisible,G=a.railColor,H=a.railOpacity,C=a.allowPageScroll,n=a.scroll,b=d(this);if(b.parent().hasClass("slimScrollDiv"))n&&(c=b.parent().find(".slimScrollBar"),g=b.parent().find(".slimScrollRail"),h(b.scrollTop()+parseInt(n),!1,!0));else{n=d("<div></div>").addClass(a.wrapperClass).css({position:"relative",
-overflow:"hidden",width:j,height:z});b.css({overflow:"hidden",width:j,height:z});var g=d("<div></div>").addClass(a.railClass).css({width:e,height:"100%",position:"absolute",top:0,display:m&&y?"block":"none","border-radius":e,background:G,opacity:H,zIndex:90}),c=d("<div></div>").addClass(a.barClass).css({background:D,width:e,position:"absolute",top:0,opacity:F,display:m?"block":"none","border-radius":e,BorderRadius:e,MozBorderRadius:e,WebkitBorderRadius:e,zIndex:99}),j="right"==E?{right:A}:{left:A};
-g.css(j);c.css(j);b.wrap(n);b.parent().append(c);b.parent().append(g);c.draggable({axis:"y",containment:"parent",start:function(){s=!0},stop:function(){s=!1;i()},drag:function(){h(0,d(this).position().top,!1)}});g.hover(function(){p()},function(){i()});c.hover(function(){r=!0},function(){r=!1});b.hover(function(){t=!0;p();i()},function(){t=!1;i()});var v=function(a){if(t){var a=a||window.event,b=0;a.wheelDelta&&(b=-a.wheelDelta/120);a.detail&&(b=a.detail/3);h(b,!0);a.preventDefault&&!l&&a.preventDefault();
-l||(a.returnValue=!1)}};(function(){window.addEventListener?(this.addEventListener("DOMMouseScroll",v,!1),this.addEventListener("mousewheel",v,!1)):document.attachEvent("onmousewheel",v)})();w();"bottom"==u?(c.css({top:b.outerHeight()-c.outerHeight()}),h(0,!0)):"object"==typeof u&&(h(d(u).position().top,null,!0),m||c.hide())}});return this}});jQuery.fn.extend({slimscroll:jQuery.fn.slimScroll})})(jQuery);
-
-
-
+(function(f){jQuery.fn.extend({slimScroll:function(g){var a=f.extend({width:"auto",height:"250px",size:"7px",color:"#000",position:"right",distance:"1px",start:"top",opacity:0.4,alwaysVisible:!1,disableFadeOut:!1,railVisible:!1,railColor:"#333",railOpacity:0.2,railDraggable:!0,railClass:"slimScrollRail",barClass:"slimScrollBar",wrapperClass:"slimScrollDiv",allowPageScroll:!1,wheelStep:20,touchScrollStep:200,borderRadius:"7px",railBorderRadius:"7px"},g);this.each(function(){function u(d){if(r){d=d||
+window.event;var c=0;d.wheelDelta&&(c=-d.wheelDelta/120);d.detail&&(c=d.detail/3);f(d.target||d.srcTarget||d.srcElement).closest("."+a.wrapperClass).is(b.parent())&&m(c,!0);d.preventDefault&&!k&&d.preventDefault();k||(d.returnValue=!1)}}function m(d,f,g){k=!1;var e=d,h=b.outerHeight()-c.outerHeight();f&&(e=parseInt(c.css("top"))+d*parseInt(a.wheelStep)/100*c.outerHeight(),e=Math.min(Math.max(e,0),h),e=0<d?Math.ceil(e):Math.floor(e),c.css({top:e+"px"}));l=parseInt(c.css("top"))/(b.outerHeight()-c.outerHeight());
+e=l*(b[0].scrollHeight-b.outerHeight());g&&(e=d,d=e/b[0].scrollHeight*b.outerHeight(),d=Math.min(Math.max(d,0),h),c.css({top:d+"px"}));b.scrollTop(e);b.trigger("slimscrolling",~~e);v();p()}function C(){window.addEventListener?(this.addEventListener("DOMMouseScroll",u,!1),this.addEventListener("mousewheel",u,!1)):document.attachEvent("onmousewheel",u)}function w(){s=Math.max(b.outerHeight()/b[0].scrollHeight*b.outerHeight(),D);c.css({height:s+"px"});var a=s==b.outerHeight()?"none":"block";c.css({display:a})}
+function v(){w();clearTimeout(A);l==~~l?(k=a.allowPageScroll,B!=l&&b.trigger("slimscroll",0==~~l?"top":"bottom")):k=!1;B=l;s>=b.outerHeight()?k=!0:(c.stop(!0,!0).fadeIn("fast"),a.railVisible&&h.stop(!0,!0).fadeIn("fast"))}function p(){a.alwaysVisible||(A=setTimeout(function(){a.disableFadeOut&&r||x||y||(c.fadeOut("slow"),h.fadeOut("slow"))},1E3))}var r,x,y,A,z,s,l,B,D=30,k=!1,b=f(this);if(b.parent().hasClass(a.wrapperClass)){var n=b.scrollTop(),c=b.parent().find("."+a.barClass),h=b.parent().find("."+
+a.railClass);w();if(f.isPlainObject(g)){if("height"in g&&"auto"==g.height){b.parent().css("height","auto");b.css("height","auto");var q=b.parent().parent().height();b.parent().css("height",q);b.css("height",q)}if("scrollTo"in g)n=parseInt(a.scrollTo);else if("scrollBy"in g)n+=parseInt(a.scrollBy);else if("destroy"in g){c.remove();h.remove();b.unwrap();return}m(n,!1,!0)}}else{a.height="auto"==g.height?b.parent().height():g.height;n=f("<div></div>").addClass(a.wrapperClass).css({position:"relative",
+overflow:"hidden",width:a.width,height:a.height});b.css({overflow:"hidden",width:a.width,height:a.height});var h=f("<div></div>").addClass(a.railClass).css({width:a.size,height:"100%",position:"absolute",top:0,display:a.alwaysVisible&&a.railVisible?"block":"none","border-radius":a.railBorderRadius,background:a.railColor,opacity:a.railOpacity,zIndex:90}),c=f("<div></div>").addClass(a.barClass).css({background:a.color,width:a.size,position:"absolute",top:0,opacity:a.opacity,display:a.alwaysVisible?
+"block":"none","border-radius":a.borderRadius,BorderRadius:a.borderRadius,MozBorderRadius:a.borderRadius,WebkitBorderRadius:a.borderRadius,zIndex:99}),q="right"==a.position?{right:a.distance}:{left:a.distance};h.css(q);c.css(q);b.wrap(n);b.parent().append(c);b.parent().append(h);a.railDraggable&&c.bind("mousedown",function(a){var b=f(document);y=!0;t=parseFloat(c.css("top"));pageY=a.pageY;b.bind("mousemove.slimscroll",function(a){currTop=t+a.pageY-pageY;c.css("top",currTop);m(0,c.position().top,!1)});
+b.bind("mouseup.slimscroll",function(a){y=!1;p();b.unbind(".slimscroll")});return!1}).bind("selectstart.slimscroll",function(a){a.stopPropagation();a.preventDefault();return!1});h.hover(function(){v()},function(){p()});c.hover(function(){x=!0},function(){x=!1});b.hover(function(){r=!0;v();p()},function(){r=!1;p()});b.bind("touchstart",function(a,b){a.originalEvent.touches.length&&(z=a.originalEvent.touches[0].pageY)});b.bind("touchmove",function(b){k||b.originalEvent.preventDefault();b.originalEvent.touches.length&&
+(m((z-b.originalEvent.touches[0].pageY)/a.touchScrollStep,!0),z=b.originalEvent.touches[0].pageY)});w();"bottom"===a.start?(c.css({top:b.outerHeight()-c.outerHeight()}),m(0,!0)):"top"!==a.start&&(m(f(a.start).position().top,null,!0),a.alwaysVisible||c.hide());C()}});return this}});jQuery.fn.extend({slimscroll:jQuery.fn.slimScroll})})(jQuery);
 
 
 
@@ -32,16 +32,48 @@ $(function() {
 	submitButton = $("#submit");
 $(".chat-list,.chat-inbox").slimScroll({height: '500px'});
 	$("#pseudoSubmit").click(function() {setPseudo()});
-	submitButton.click(function() {sentMessage();});
+	submitButton.click(function() {sentMessage(); messageContainer.focus();$('.hasTyping').fadeOut();});
 
 $('#modalPseudo').modal('show');
 
+messageContainer.keypress(function(e){
 
+    if (e.which == 13) {
+      sentMessage();
+    }else{
+    	socket.emit("typing", {status: "true"});
+    }
+
+
+
+  });
+
+function timeoutFunction(){
+	socket.emit("typing", false);
+}
+
+var timeout=undefined;
 
 	//Socket.io
 	var socket = io.connect();
+
+
+
+	socket.on("isTyping", function(data) {  
+  if (data.isTyping) {
+  	if(data.name!=="you"){
+  		$('.hasTyping').fadeIn();
+  		clearTimeout(timeout);
+        timeout = setTimeout(timeoutFunction, 5000);
+    }
+  }else{
+  	$('.hasTyping').fadeOut();
+  }
+});
+
+
 	socket.on('connect', function() {
-		console.log('connected');
+		
 		var delivery = new Delivery(socket);
 
 	   delivery.on('delivery.connect',function(delivery){
@@ -68,10 +100,6 @@ $('#modalPseudo').modal('show');
 
 	});
 
-	socket.on('nbUsers', function(msg) {
-		$('.badge').html(msg.nb);
-		console.log(msg);
-	});
 
 	socket.on('message', function(data) {
 	addMessage(data['message'], data['pseudo'], new Date().toISOString(), false);
@@ -84,13 +112,14 @@ $('#modalPseudo').modal('show');
 
 
 
-	socket.on('userslist', function(msg) {
-		console.log(msg);
-		$('#chat-inbox').html("");
-		for(var i=0;i<msg.ulist.length;i++){
+	socket.on('userslist', function(data) {
+		var totalUsersOnline=Object.keys(data).length;
+		$('.badge').html(totalUsersOnline);
+		$('#chat-inbox').empty();
+		$.each(data, function(key, value) {
 			
-			$('#chat-inbox').append("<li><a href='#'><div class='media'><div class='media-body'><p class='media-heading'><span class='badge badge-green'>3</span>"+msg.ulist[i]+"<span class='time'>16.3.2014</span></p>"+"</div></div></a></li>")
-		}
+			$('#chat-inbox').append("<li><a href='#'><div class='media'><div class='media-body'><p class='media-heading'><span class='badge badge-green'></span>"+key+"<span class='time'></span></p>"+"</div></div></a></li>")
+		});
 		
 	});
 
@@ -98,7 +127,9 @@ $('#modalPseudo').modal('show');
 		if(self) var classDiv = 'message receive';
 		else var classDiv = 'message sent';
 		$(".chat-list").append('<li class="'+classDiv+'"><div class="media"><div class="pull-left user-avatar"><img src="ppic.jpg" class="media-object img-circle"> </div><div class="media-body"><p class="media-heading"><a href="#">'+pseudo+'</a><span class="time">'+date+'</span></p><p>'+msg+'</p>   </div></div></li>');
-
+		
+		$(".chat-list").slimScroll({ scrollTo: $(".chat-list")[0].scrollHeight });
+		
 		
 	}
 
@@ -114,6 +145,7 @@ $('#modalPseudo').modal('show');
 					$('#modalPseudo').modal('hide');
 					$("#alertPseudo").hide();
 					pseudo = $("#pseudoInput").val();
+					
 				}
 				else
 				{
@@ -124,7 +156,7 @@ $('#modalPseudo').modal('show');
 
 
 			socket.on('connedUser',function(data){
-				$(".chat-list").append('<li class="conversation-divider"><span>'+data+' joined at 26.03.2014</span></li>');
+				$(".chat-list").append('<li class="conversation-divider"><span>'+data +' '+ new Date().toISOString()+'</span></li>');
 			})
 		}
 	}

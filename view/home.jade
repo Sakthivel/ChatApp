@@ -20,15 +20,16 @@ html
 
 							div.col-lg-8.col-md-7.col-sm-6 
 										section.tile.transparent
-													div.tile-header.bg-transparent-black-5.rounded-top-corners
+													
 													div.tile-body.color.transparent.rounded-bottom-corners.nopadding
 																	div.chat-content#chat-content
 																				ul.chat-list
+																				div.hasTyping Someone is typing.......
 																						
 													div.tile-footer.transparent.nopadding 
 															div.chat-reply#chat-reply
 																	textarea#messageInput(placeholder="Type your message here.....")
-																	input(type='file',name='file')#fileAttach
+																	
 
 																	div.btn-group.btn-group-sm
 																			button(type="button")#submit.btn.btn-transparent-white.last.pull-right  Send
@@ -36,7 +37,7 @@ html
 										section.tile.transparent
 													div.tile-header.bg-transparent-black-5.rounded-top-corners
 																			h5 Online users
-																				span.badge.badge-red 3
+																				span.badge.badge-red 
 													div.tile-body.color.transparent-black.rounded-bottom-corners.nopadding
 																		ul.chat-inbox#chat-inbox
 			div.modal.fade#modalPseudo

@@ -4417,7 +4417,7 @@ position: relative;
 border-radius: 4px;
 }
 .chat-content {
-padding: 20px 0;
+padding: 0px 0 10px 0;
 }
 .chat-content .chat-list {
 list-style-type: none;
@@ -4425,7 +4425,8 @@ margin: 0;
 padding: 0;
 color: rgba(255, 255, 255, 0.7);
 overflow: hidden;
-
+background: rgba(255, 255, 255, 0.15) !important;
+padding: 20px;
 }
 .chat-content .chat-list > li {
 position: relative;
@@ -4591,4 +4592,15 @@ padding: 3px 10px;
 border-radius: 3px;
 -webkit-box-shadow: 0 3px 0 rgba(0, 0, 0, 0.05);
 box-shadow: 0 3px 0 rgba(0, 0, 0, 0.05);
+}
+.hasTyping{
+  position: absolute;
+margin-top: -27px;
+padding: 5px;
+width: 100%;
+background-color: rgba(0, 0, 0, 0.3) !important;
+color: #DACBCB;
+text-align: right;
+font-size: 12px;
+display: none;
 }
