@@ -4327,7 +4327,7 @@ box-shadow: 0 3px 0 rgba(0, 0, 0, 0.05);
 margin-bottom: 0 !important;
 }
 body #main .tile .tile-header {
-padding: 15px;
+padding: 1px 10px;
 position: relative;
 }
 .bg-transparent-black-5 {
@@ -4603,4 +4603,21 @@ color: #DACBCB;
 text-align: right;
 font-size: 12px;
 display: none;
+}
+.chat-inbox > li > a.active {
+cursor: default;
+background-color: rgba(255, 255, 255, 0.15);
+border: 1px solid rgba(255, 255, 255, 0.1);
+-webkit-box-shadow: 0 3px 0 rgba(0, 0, 0, 0.05);
+box-shadow: 0 3px 0 rgba(0, 0, 0, 0.05);
+}
+.chat-inbox > li > a .media .media-object {
+width: 30px;
+height: 30px;
+filter: alpha(opacity=40);
+opacity: 0.4;
+}
+.chat-inbox > li > a.active .media .media-heading {
+color: white;
+font-weight: 700;
 }

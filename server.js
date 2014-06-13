@@ -33,8 +33,12 @@ console.log("Server listening on port 16558");
 
 
 var usernames = {};
+var chatHistory=['history'];
+var rooms=['General','Political','International','Technology','Science']
 
 io.sockets.on('connection', function (socket) { // First connection
+
+
 
 var delivery = dl.listen(socket);
   delivery.on('receive.success',function(file){
@@ -53,19 +57,30 @@ var delivery = dl.listen(socket);
   });
 
 
-	socket.on("typing", function(data) { 
-
+	socket.on("typing", function(data) {
 		//console.log(data.name);
 		 io.sockets.emit("isTyping", {isTyping: data.status, name :data.name});
+	});
+
+	socket.on('message', function (data) { // Broadcast the message to all
+		if(pseudoSet(socket))
+		{
+			var history=chatHistory.push(returnPseudo(socket) + ": " + data);
+			socket.broadcast.emit('history', history);
+			
+			
+		}
 	});
 	
 
 	socket.on('message', function (data) { // Broadcast the message to all
 		if(pseudoSet(socket))
 		{
+			var his=chatHistory.push(returnPseudo(socket) + ": " + data);
 			var transmit = {date : new Date().toISOString(), pseudo : returnPseudo(socket), message : data};
-			socket.broadcast.emit('message', transmit);
-			console.log("user "+ transmit['pseudo'] +" said \""+data+"\"");
+			socket.in(socket.room).broadcast.emit('message', transmit);
+			
+			
 		}
 	});
 	socket.on('setPseudo', function (data) { // Assign a name to the user
@@ -78,7 +93,10 @@ var delivery = dl.listen(socket);
 				console.log(socket.id);
 				socket.username = data;
 				usernames[data] = data;
+				// send client to room 1
+				socket.join('General');
 
+				socket.emit('connedUser', 'SERVER', 'you have connected to General');
 				
 				//pseudoArray.push(data);
 				socket.emit('pseudoStatus', 'ok');
@@ -87,6 +105,7 @@ var delivery = dl.listen(socket);
 				
 
 				io.sockets.emit('userslist', usernames);
+				io.sockets.emit('updaterooms', rooms, 'General');
 			});
 		}
 		else
@@ -94,6 +113,20 @@ var delivery = dl.listen(socket);
 			socket.emit('pseudoStatus', 'error') // Send the error
 		}
 	});
+
+
+	socket.on('switchRoom', function(newroom){
+		socket.leave(socket.room);
+		socket.join(newroom);
+		socket.emit('connedUser', 'you have connected to '+ newroom);
+		socket.broadcast.to(socket.room).emit('connedUser',  socket.username+' has left this room');
+		socket.room = newroom;
+		socket.broadcast.to(newroom).emit('connedUser', socket.username+' has joined this room');
+		io.sockets.emit('updaterooms', rooms, newroom);
+
+	});
+
+
 	socket.on('disconnect', function () { // Disconnection of the client
 		
 		if (pseudoSet(socket))

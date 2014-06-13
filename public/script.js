@@ -30,9 +30,11 @@ $(function() {
 
 	messageContainer = $('#messageInput');
 	submitButton = $("#submit");
-$(".chat-list,.chat-inbox").slimScroll({height: '500px'});
+$(".chat-list").slimScroll({height: '500px'});
+$(".chat-inbox").slimScroll({height: '200px'});
 	$("#pseudoSubmit").click(function() {setPseudo()});
 	submitButton.click(function() {sentMessage(); messageContainer.focus();$('.hasTyping').fadeOut();});
+	$('#chat-rooms').on('click','li a', function() { var room=$(this).attr('data-room');  socket.emit('switchRoom', room); });
 
 $('#modalPseudo').modal('show');
 
@@ -74,7 +76,7 @@ var timeout=undefined;
 
 	socket.on('connect', function() {
 		
-		var delivery = new Delivery(socket);
+		/*var delivery = new Delivery(socket);
 
 	   delivery.on('delivery.connect',function(delivery){
 		      $("#submit").click(function(evt){
@@ -84,10 +86,10 @@ var timeout=undefined;
 		      });
 		    });
 	   delivery.on('send.success',function(fileUID){
-	   	console.log(fileUID);
+	   	console.log(fileUID);*/
 	   
 	   
-      console.log("file was successfully sent.");
+     // console.log("file was successfully sent.");
       socket.on('fileAttach', function(data) {
 				$(".chat-list").append('<li class="conversation-divider"><span><img src="data:image/jpeg;base64,'+data.data+'"></span></li>');
 				console.log(data);
@@ -96,17 +98,41 @@ var timeout=undefined;
 
 
 
-    });
+   /* });*/
 
 	});
 
 
-	socket.on('message', function(data) {
-	addMessage(data['message'], data['pseudo'], new Date().toISOString(), false);
+	socket.on('updaterooms', function(data,room) {
+$('#chat-rooms').empty();
+		
+$.each(data, function(key, value) {
+	
 
+	if(value==room){
+		var activeRoom="active";
+	}
+    		 $('#chat-rooms').append("<li><a href='#' data-room="+value+" class='"+activeRoom+"'><div class='media'><div class='pull-left'><img class='media-object img-circle' src='ppic.jpg'></div><div class='media-body'><p class='media-heading'><span class='badge badge-green'></span>"+value+"<span class='time'></span></p>"+"</div></div></a></li>")
+		});
 	
+	});
+
+
+	socket.on('message', function(data) {
+
+	addMessage(data['message'], data['pseudo'], new Date().toISOString(), false);
 	
-});
+	});
+
+
+	socket.on('history', function(data) {
+		$.each(data, function(key, value) {
+    		 $('#chat-rooms').append("<li><a href='#' class='active'><div class='media'><div class='pull-left'><img class='media-object img-circle' src='ppic.jpg'></div><div class='media-body'><p class='media-heading'><span class='badge badge-green'></span>"+key+"<span class='time'></span></p>"+"</div></div></a></li>")
+		});
+	});
+
+
+
 
 
 
@@ -118,17 +144,25 @@ var timeout=undefined;
 		$('#chat-inbox').empty();
 		$.each(data, function(key, value) {
 			
-			$('#chat-inbox').append("<li><a href='#'><div class='media'><div class='media-body'><p class='media-heading'><span class='badge badge-green'></span>"+key+"<span class='time'></span></p>"+"</div></div></a></li>")
+			$('#chat-inbox').append("<li><a href='#' class='active'><div class='media'><div class='pull-left'><img class='media-object img-circle' src='ppic.jpg'></div><div class='media-body'><p class='media-heading'><span class='badge badge-green'></span>"+key+"<span class='time'></span></p>"+"</div></div></a></li>")
 		});
 		
 	});
 
-	function addMessage(msg, pseudo, date, self) {
+	function addMessage(msg, pseudo, date, self 
+
+
+		) {
+
+
+	
 		if(self) var classDiv = 'message receive';
 		else var classDiv = 'message sent';
 		$(".chat-list").append('<li class="'+classDiv+'"><div class="media"><div class="pull-left user-avatar"><img src="ppic.jpg" class="media-object img-circle"> </div><div class="media-body"><p class="media-heading"><a href="#">'+pseudo+'</a><span class="time">'+date+'</span></p><p>'+msg+'</p>   </div></div></li>');
 		
 		$(".chat-list").slimScroll({ scrollTo: $(".chat-list")[0].scrollHeight });
+
+		
 		
 		
 	}
@@ -145,7 +179,7 @@ var timeout=undefined;
 					$('#modalPseudo').modal('hide');
 					$("#alertPseudo").hide();
 					pseudo = $("#pseudoInput").val();
-					
+
 				}
 				else
 				{
