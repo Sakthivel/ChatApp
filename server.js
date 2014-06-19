@@ -92,7 +92,38 @@ var http = require('http')
 
 			//process a message from user to users
 			socket.on("send", function(msg) {
-				socket.in(socket.room).broadcast.emit("chat", people[socket.id], msg);
+				var re = /^[w]:.*:/;
+				var whisper = re.test(msg);
+				var whisperStr = msg.split(":");
+				var found = false;
+					if (whisper) {
+						var whisperTo = whisperStr[1];
+						var keys = Object.keys(people);
+						if (keys.length != 0) {
+							for (var i = 0; i<keys.length; i++) {
+								if (people[keys[i]].name === whisperTo) {
+									var whisperId = keys[i];
+									found = true;
+									if (socket.id === whisperId) { //can't whisper to ourselves
+										socket.emit("update", "You can't whisper to yourself.");
+									}
+									break;
+								} 
+							}
+						}
+
+						if (found && socket.id !== whisperId) {
+							var whisperTo = whisperStr[1];
+							var whisperMsg = whisperStr[2];
+							socket.emit("whisper", {name: "You"}, whisperMsg);
+							io.sockets.socket(whisperId).emit("whisper", people[socket.id], whisperMsg);
+						} 
+
+
+					}else{
+
+						socket.in(socket.room).broadcast.emit("chat", people[socket.id], msg);
+					}
 			});
 
 

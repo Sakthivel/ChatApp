@@ -68,8 +68,17 @@ $(function() {
 	socket.on('update-people',function(data){
 				$("#chat-inbox").empty();
 				 $.each(data.people, function(a, obj) {
-				$('#chat-inbox').append("<li class='"+obj.name+"'><a href='#' class='active'><div class='media'><div class='pull-left'><img class='media-object img-circle' src='ppic.jpg'></div><div class='media-body'><p class='media-heading'><span class='badge badge-green'></span><span class='badge badge-green time'>"+obj.device+"</span>"+obj.name+"<span class='typing'></span></p>"+"</div></div></a></li>")
-			});
+						$('#chat-inbox').append("<li class='"+obj.name+"'><a href='#' class='active'><div class='media'><div class='pull-left'><img class='media-object img-circle' src='ppic.jpg'></div><div class='media-body'><p class='media-heading'><span class='badge badge-green'></span><span class='badge badge-green time'>"+obj.device+"</span>"+obj.name+"<span class='typing'></span></p>"+"</div></div></a></li>")
+				});
+
+				 $('#whisperList').empty();
+
+				 $.each(data.people, function(key, value) {   
+					     $('#whisperList')
+					         .append($("<option></option>")
+					         .attr("value",value.name)
+					         .text(value.name)); 
+					});
 	});
 
 	//'is typing' message
@@ -90,13 +99,16 @@ $(function() {
 	        clearTimeout(timeout);
 	        timeout = setTimeout(timeoutFunction, 5000);
 	      }
+	    }else{
+	    	e.preventDefault();
+	    	send_msg();
+			
 	    }
 	  });
 
 	  socket.on("isTyping", function(data) {
 	      if (data.isTyping) {
 		      if ($("#"+data.person+"").length === 0) {
-		       // $('.hasTyping').show().append("<div id='"+ data.person +"'><span class='text-muted'><small><i class='fa fa-keyboard-o'></i> " + data.person + " is typing.</small></div>");
 		       $('#chat-inbox').children("."+data.person).children().find('.typing').show().html('typing....');
 		        timeout = setTimeout(timeoutFunction, 5000);
 		      }
@@ -109,13 +121,25 @@ $(function() {
 	 var self=true;
 	  //send msg to the users
 	  $("#submit").click(function() {
-	    var msg = $("#messageInput").val();
-	    if (msg !== "") {
+	    	send_msg();
+	  });
+
+	 
+
+
+	  function send_msg(){
+	  	var msg = $("#messageInput").val();
+
+	    if (msg.length > 0 ) {
 	      socket.emit("send", msg  );
 	      chat({name:"me"},msg,true)
 	      $("#messageInput").val("");
+	       $("#messageInput").focus();
+	       $(".chat-list").slimScroll({ scrollTo: $(".chat-list")[0].scrollHeight });
+	       
 	    }
-	  });
+
+	  }
 
 	  socket.on("chat", function(person, msg,self) {
 	      chat(person, msg,false);
@@ -126,11 +150,45 @@ $(function() {
 		else var classDiv = 'message receive';
 		$(".chat-list").append('<li class="'+classDiv+'"><div class="media"><div class="pull-left user-avatar"><img src="ppic.jpg" class="media-object img-circle"> </div><div class="media-body"><p class="media-heading"><a href="#">'+person.name+'</a></p><p>'+msg+'</p>   </div></div></li>');
 	    //clear typing field
-	    
+	     $(".chat-list").slimScroll({ scrollTo: $(".chat-list")[0].scrollHeight });
 	     clearTimeout(timeout);
 	     timeout = setTimeout(timeoutFunction, 0);
 	  }
 
+
+	  //wispher actions
+	  $('#whisperbtn').click(function(){
+			$('#whisperPeopleList').modal('show');
+	  });
+
+	  $('#SubmitWhisper').click(function(){
+	  	var msg=$("#whisperMessageInput").val();
+	  	  socket.emit("send", msg);
+	      chat({name:"me"},msg,true);
+	      $('#whisperPeopleList').modal('hide');
+	      $("#whisperMessageInput").val("");
+	       $(".chat-list").slimScroll({ scrollTo: $(".chat-list")[0].scrollHeight });
+	  		
+	  });
+
+	  $('#whisperList').change(function(){
+	  	$('#whisperMessageInput').val("w:"+$(this).val()+":");
+
+	  });
+
+
+
+	  socket.on("whisper", function(person, msg) {
+	    if (person.name === "You") {
+	      s = "whisper";
+	      var classDiv = 'message sent';
+	    } else {
+	      s = "whispers"
+	      var classDiv = 'message receive';
+	    }
+
+	  $(".chat-list").append('<li class="'+classDiv+'"><div class="media"><div class="pull-left user-avatar"><img src="ppic.jpg" class="media-object img-circle"> </div><div class="media-body"><p class="media-heading"><a href="#">'+s+'</a></p><p>'+msg+'</p>   </div></div></li>');
+	  });
 
 
 

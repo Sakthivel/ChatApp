@@ -17,7 +17,7 @@ html
 					div#left-menu
 					div.row#right-container
 							
-							div.col-lg-4.col-md-5.col-sm-6
+							div.col-lg-4.col-md-5.col-sm-6#usersList
 										section.tile.transparent
 													
 													div.tile-body.color.transparent-black.rounded-bottom-corners.nopadding
@@ -26,7 +26,7 @@ html
 							
 																				
 
-							div.col-lg-8.col-md-7.col-sm-6 
+							div.col-lg-8.col-md-7.col-sm-6#msgContainer
 										section.tile.transparent
 													
 													div.tile-body.color.transparent.rounded-bottom-corners.nopadding
@@ -37,9 +37,12 @@ html
 													div.tile-footer.transparent.nopadding 
 															div.chat-reply#chat-reply
 																	textarea#messageInput(placeholder="Type your message here.....")
+
 																	
 
 																	div.btn-group.btn-group-sm
+																			button(type="button")#whisperbtn.btn.btn-transparent-white.last.pull-left  whisper someone
+
 																			button(type="button")#submit.btn.btn-transparent-white.last.pull-right  Send
 							
 
@@ -58,6 +61,22 @@ html
 								div.modal-footer
 									button.btn.btn-primary#pseudoSubmit Go to the chat
 
+
+			div.modal.fade#whisperPeopleList
+					div.modal-dialog
+						div.modal-content
+								div.modal-header
+									h3 Choose a person you wish to whisper
+								div.modal-body
+									p Choose a name :
+									select#whisperList.form-control
+									div.alert.alert-error#alertPseudo
+										| This name is already used ! Choose another one.
+									P Message :
+									textarea#whisperMessageInput(placeholder="Type your message here.....")
+
+								div.modal-footer
+									button.btn.btn-primary#SubmitWhisper whisper
 
 
 
