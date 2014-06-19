@@ -26,197 +26,134 @@ b.bind("mouseup.slimscroll",function(a){y=!1;p();b.unbind(".slimscroll")});retur
 
 $(function() {
 
-
-
-	messageContainer = $('#messageInput');
-	submitButton = $("#submit");
-$(".chat-list").slimScroll({height: '500px'});
-$(".chat-inbox").slimScroll({height: '200px'});
-	$("#pseudoSubmit").click(function() {setPseudo()});
-	submitButton.click(function() {sentMessage(); messageContainer.focus();$('.hasTyping').fadeOut();});
-	$('#chat-rooms').on('click','li a', function() { var room=$(this).attr('data-room');  socket.emit('switchRoom', room); });
-
-$('#modalPseudo').modal('show');
-
-messageContainer.keypress(function(e){
-
-    if (e.which == 13) {
-      sentMessage();
-    }else{
-    	socket.emit("typing", {status: "true"});
-    }
-
-
-
-  });
-
-function timeoutFunction(){
-	socket.emit("typing", false);
-}
-
-var timeout=undefined;
+	//General actions capture here 
+	$('#modalPseudo').modal('show');
+	$("#pseudoSubmit").click(function() {joinserver()});
 
 	//Socket.io
 	var socket = io.connect();
+	var myRoomID = null;
+
+
+	//get user details from user and pass to server
+	function joinserver(){
+
+		
+		var device = "desktop";  
+			if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)) {  
+			  device = "mobile";
+			}
+		socket.emit('joinserver', $("#pseudoInput").val(),device);
+	}
 
 
 
-	socket.on("isTyping", function(data) {  
-  if (data.isTyping) {
-  	if(data.name!=="you"){
-  		$('.hasTyping').fadeIn();
-  		clearTimeout(timeout);
-        timeout = setTimeout(timeoutFunction, 5000);
-    }
-  }else{
-  	$('.hasTyping').fadeOut();
-  }
+	//update msg to the users
+	socket.on('update',function(data){
+				$(".chat-list").append('<li class="conversation-divider"><span>'+data+'</span></li>');
+	});
+
+	//tell user is already exisits
+	socket.on('exists',function(data){
+				if(data.status=="exists"){
+					$("#alertPseudo").show().html(data.msg);
+
+				}else{
+					$('#modalPseudo').modal('hide');
+
+				}
+	});
+
+	//update people list conatiner
+	socket.on('update-people',function(data){
+				$("#chat-inbox").empty();
+				 $.each(data.people, function(a, obj) {
+				$('#chat-inbox').append("<li class='"+obj.name+"'><a href='#' class='active'><div class='media'><div class='pull-left'><img class='media-object img-circle' src='ppic.jpg'></div><div class='media-body'><p class='media-heading'><span class='badge badge-green'></span><span class='badge badge-green time'>"+obj.device+"</span>"+obj.name+"<span class='typing'></span></p>"+"</div></div></a></li>")
+			});
+	});
+
+	//'is typing' message
+	  var typing = false;
+	  var timeout = undefined;
+
+	  function timeoutFunction() {
+	    typing = false;
+	    socket.emit("typing", false);
+	  }
+
+	  $("#messageInput").keypress(function(e){
+	    if (e.which !== 13) {
+	      if (typing === false  && $("#messageInput").is(":focus")) {
+	        typing = true;
+	        socket.emit("typing", true);
+	      } else {
+	        clearTimeout(timeout);
+	        timeout = setTimeout(timeoutFunction, 5000);
+	      }
+	    }
+	  });
+
+	  socket.on("isTyping", function(data) {
+	      if (data.isTyping) {
+		      if ($("#"+data.person+"").length === 0) {
+		       // $('.hasTyping').show().append("<div id='"+ data.person +"'><span class='text-muted'><small><i class='fa fa-keyboard-o'></i> " + data.person + " is typing.</small></div>");
+		       $('#chat-inbox').children("."+data.person).children().find('.typing').show().html('typing....');
+		        timeout = setTimeout(timeoutFunction, 5000);
+		      }
+		    } else {
+		      
+		     $('#chat-inbox').children("."+data.person).children().find('.typing').hide();
+		    }
+	  });
+
+	 var self=true;
+	  //send msg to the users
+	  $("#submit").click(function() {
+	    var msg = $("#messageInput").val();
+	    if (msg !== "") {
+	      socket.emit("send", msg  );
+	      chat({name:"me"},msg,true)
+	      $("#messageInput").val("");
+	    }
+	  });
+
+	  socket.on("chat", function(person, msg,self) {
+	      chat(person, msg,false);
+	  });
+
+	  function chat(person, msg,self){
+	  	if(self) var classDiv = 'message sent';
+		else var classDiv = 'message receive';
+		$(".chat-list").append('<li class="'+classDiv+'"><div class="media"><div class="pull-left user-avatar"><img src="ppic.jpg" class="media-object img-circle"> </div><div class="media-body"><p class="media-heading"><a href="#">'+person.name+'</a></p><p>'+msg+'</p>   </div></div></li>');
+	    //clear typing field
+	    
+	     clearTimeout(timeout);
+	     timeout = setTimeout(timeoutFunction, 0);
+	  }
+
+
+
+
+
+
+
+
+  // This will execute whenever the window is resized
+  var win_height=$(window).height(); // New height
+
+  $('#chat-inbox').css('height',win_height);
+   $('#chat-content').css('height',win_height-109);
+   $(".chat-list").slimScroll({height:win_height-109});
+
+
+
 });
 
+$(window).resize(function() {
+  // This will execute whenever the window is resized
+  var win_height=$(window).height(); // New height
 
-	socket.on('connect', function() {
-		
-		/*var delivery = new Delivery(socket);
-
-	   delivery.on('delivery.connect',function(delivery){
-		      $("#submit").click(function(evt){
-		        var file = $("input[type=file]")[0].files[0];
-		        delivery.send(file);
-		        evt.preventDefault();
-		      });
-		    });
-	   delivery.on('send.success',function(fileUID){
-	   	console.log(fileUID);*/
-	   
-	   
-     // console.log("file was successfully sent.");
-      socket.on('fileAttach', function(data) {
-				$(".chat-list").append('<li class="conversation-divider"><span><img src="data:image/jpeg;base64,'+data.data+'"></span></li>');
-				console.log(data);
-			
-		});
-
-
-
-   /* });*/
-
-	});
-
-
-	socket.on('updaterooms', function(data,room) {
-$('#chat-rooms').empty();
-		
-$.each(data, function(key, value) {
-	
-
-	if(value==room){
-		var activeRoom="active";
-	}
-    		 $('#chat-rooms').append("<li><a href='#' data-room="+value+" class='"+activeRoom+"'><div class='media'><div class='pull-left'><img class='media-object img-circle' src='ppic.jpg'></div><div class='media-body'><p class='media-heading'><span class='badge badge-green'></span>"+value+"<span class='time'></span></p>"+"</div></div></a></li>")
-		});
-	
-	});
-
-
-	socket.on('message', function(data) {
-
-	addMessage(data['message'], data['pseudo'], new Date().toISOString(), false);
-	
-	});
-
-
-	socket.on('history', function(data) {
-		$.each(data, function(key, value) {
-    		 $('#chat-rooms').append("<li><a href='#' class='active'><div class='media'><div class='pull-left'><img class='media-object img-circle' src='ppic.jpg'></div><div class='media-body'><p class='media-heading'><span class='badge badge-green'></span>"+key+"<span class='time'></span></p>"+"</div></div></a></li>")
-		});
-	});
-
-
-
-
-
-
-
-
-	socket.on('userslist', function(data) {
-		var totalUsersOnline=Object.keys(data).length;
-		$('.badge').html(totalUsersOnline);
-		$('#chat-inbox').empty();
-		$.each(data, function(key, value) {
-			
-			$('#chat-inbox').append("<li><a href='#' class='active'><div class='media'><div class='pull-left'><img class='media-object img-circle' src='ppic.jpg'></div><div class='media-body'><p class='media-heading'><span class='badge badge-green'></span>"+key+"<span class='time'></span></p>"+"</div></div></a></li>")
-		});
-		
-	});
-
-	function addMessage(msg, pseudo, date, self 
-
-
-		) {
-
-
-	
-		if(self) var classDiv = 'message receive';
-		else var classDiv = 'message sent';
-		$(".chat-list").append('<li class="'+classDiv+'"><div class="media"><div class="pull-left user-avatar"><img src="ppic.jpg" class="media-object img-circle"> </div><div class="media-body"><p class="media-heading"><a href="#">'+pseudo+'</a><span class="time">'+date+'</span></p><p>'+msg+'</p>   </div></div></li>');
-		
-		$(".chat-list").slimScroll({ scrollTo: $(".chat-list")[0].scrollHeight });
-
-		
-		
-		
-	}
-
-	
-
-	function setPseudo() {
-		if ($("#pseudoInput").val() != "")
-		{
-			socket.emit('setPseudo', $("#pseudoInput").val());
-			socket.on('pseudoStatus', function(data){
-				if(data == "ok")
-				{
-					$('#modalPseudo').modal('hide');
-					$("#alertPseudo").hide();
-					pseudo = $("#pseudoInput").val();
-
-				}
-				else
-				{
-					$("#alertPseudo").slideDown();
-				}
-			})
-
-
-
-			socket.on('connedUser',function(data){
-				$(".chat-list").append('<li class="conversation-divider"><span>'+data +' '+ new Date().toISOString()+'</span></li>');
-			})
-		}
-	}
-
-	function sentMessage() {
-	if (messageContainer.val() != "") 
-	{
-		if (pseudo == "") 
-		{
-			$('#modalPseudo').modal('show');
-		}
-		else 
-		{
-			socket.emit('message', messageContainer.val());
-			addMessage(messageContainer.val(), "Me", new Date().toISOString(), true);
-			messageContainer.val('');
-			
-		}
-	}
-}
-
-function setHeight() {
-	$(".slimScrollDiv").height('603');
-	$(".slimScrollDiv").css('overflow', 'visible')
-}
-
-
-
+  $('#chat-inbox').css('height',win_height);
+  $('#chat-content').css('height',win_height-109);
+  $(".chat-list").slimScroll({height:win_height-109});
 });
