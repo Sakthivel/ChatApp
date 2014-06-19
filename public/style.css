@@ -4384,6 +4384,7 @@ overflow: hidden;
 padding: 0;
 list-style: none;
 margin: 0;
+padding-top: 10px;
 }
 .chat-inbox > li > a .media .media-body .media-heading .time {
 float: right;
@@ -4506,13 +4507,7 @@ z-index: 1;
 }
 .chat-reply .btn-group {
 width: 100%;
-background: rgba(255, 255, 255, 0.15) !important;
 padding: 10px;
--webkit-border-radius: 0 0 4px 4px !important;
--moz-border-radius: 0 0 4px 4px !important;
--ms-border-radius: 0 0 4px 4px !important;
--o-border-radius: 0 0 4px 4px !important;
-border-radius: 0 0 4px 4px !important;
 }
 .btn-group, .btn-group-vertical {
 position: relative;
@@ -4615,20 +4610,16 @@ opacity: 0.4;
 color: white;
 font-weight: 700;
 }
-#left-menu {
+#header-menu {
 float: left;
-position: fixed;
 left: 0;
 top: 0;
 overflow: hidden;
-height: 100%;
-min-height: 100%;
 background: #1f2123;
-width: 65px;
+width: 100%;
+height: 50px;
 }
-#right-container{
-  margin-left: 65px;
-}
+
 .typing{
 float: right;
 font-size: 11px;
@@ -4645,4 +4636,26 @@ padding-right: 10px;
   width: 100%;
   height: 90px;
   font-size: 12px;
+}
+.sendButtonContainer{
+  background: rgba(255, 255, 255, 0.15) !important;
+float: left;
+width: 100%;
+padding: 10px;
+}
+#headerMenuUl{
+  margin: 0;
+  padding: 0;
+  float: right;
+}
+#headerMenuUl li{
+  list-style: none;
+padding: 10px;
+color: #fff;
+float: left;
+font-size: 20px;
+}
+#usernameHolder,#messageStack{
+  font-weight: bold;
+  
 }

@@ -37,13 +37,13 @@ $(function() {
 
 	//get user details from user and pass to server
 	function joinserver(){
-
 		
 		var device = "desktop";  
 			if (navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)) {  
 			  device = "mobile";
 			}
 		socket.emit('joinserver', $("#pseudoInput").val(),device);
+		 $('.usernameSpan').show().html($("#pseudoInput").val()+"<span class='badge badge-green'>Online</span>");
 	}
 
 
@@ -57,6 +57,8 @@ $(function() {
 	socket.on('exists',function(data){
 				if(data.status=="exists"){
 					$("#alertPseudo").show().html(data.msg);
+					 $('.usernameSpan').hide();
+
 
 				}else{
 					$('#modalPseudo').modal('hide');
@@ -153,6 +155,7 @@ $(function() {
 	     $(".chat-list").slimScroll({ scrollTo: $(".chat-list")[0].scrollHeight });
 	     clearTimeout(timeout);
 	     timeout = setTimeout(timeoutFunction, 0);
+	     console.log('1');
 	  }
 
 
@@ -199,9 +202,10 @@ $(function() {
   // This will execute whenever the window is resized
   var win_height=$(window).height(); // New height
 
-  $('#chat-inbox').css('height',win_height);
-   $('#chat-content').css('height',win_height-109);
-   $(".chat-list").slimScroll({height:win_height-109});
+  $('#chat-inbox').css('height',win_height-50);
+   $('#chat-content').css('height',win_height-159);
+   $(".chat-list").slimScroll({height:win_height-159});
+   $(".chat-inbox").slimScroll({height:win_height-50});
 
 
 
@@ -211,7 +215,8 @@ $(window).resize(function() {
   // This will execute whenever the window is resized
   var win_height=$(window).height(); // New height
 
-  $('#chat-inbox').css('height',win_height);
-  $('#chat-content').css('height',win_height-109);
-  $(".chat-list").slimScroll({height:win_height-109});
+  $('#chat-inbox').css('height',win_height-50);
+  $('#chat-content').css('height',win_height-159);
+  $(".chat-list").slimScroll({height:win_height-159});
+  $(".chat-inbox").slimScroll({height:win_height-159});
 });

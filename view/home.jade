@@ -12,9 +12,14 @@ html
 
 
 	body
+			div#header-menu
+				ul#headerMenuUl
+					
+					li#usernameHolder Welcome  
+						span.usernameSpan
 
 			div.container#main
-					div#left-menu
+					
 					div.row#right-container
 							
 							div.col-lg-4.col-md-5.col-sm-6#usersList
@@ -39,11 +44,11 @@ html
 																	textarea#messageInput(placeholder="Type your message here.....")
 
 																	
-
+																div.sendButtonContainer
 																	div.btn-group.btn-group-sm
-																			button(type="button")#whisperbtn.btn.btn-transparent-white.last.pull-left  whisper someone
+																			button(type="button")#whisperbtn.btn.btn-transparent-white.last  whisper someone
 
-																			button(type="button")#submit.btn.btn-transparent-white.last.pull-right  Send
+																			button(type="button")#submit.btn.btn-transparent-white.last Send
 							
 
 							
