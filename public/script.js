@@ -29,6 +29,7 @@ $(function() {
 	//General actions capture here 
 	$('#modalPseudo').modal('show');
 	$("#pseudoSubmit").click(function() {joinserver()});
+	$("#messageInput").mbSmilesBox();
 
 	//Socket.io
 	var socket = io.connect();
@@ -70,7 +71,13 @@ $(function() {
 	socket.on('update-people',function(data){
 				$("#chat-inbox").empty();
 				 $.each(data.people, function(a, obj) {
-						$('#chat-inbox').append("<li class='"+obj.name+"'><a href='#' class='active'><div class='media'><div class='pull-left'><img class='media-object img-circle' src='ppic.jpg'></div><div class='media-body'><p class='media-heading'><span class='badge badge-green'></span><span class='badge badge-green time'>"+obj.device+"</span>"+obj.name+"<span class='typing'></span></p>"+"</div></div></a></li>")
+				 	if(obj.device=="desktop"){
+				 		var deviceIcon="fa fa-desktop";
+				 	}else{
+				 		var deviceIcon="fa fa-mobile";
+				 	}
+
+						$('#chat-inbox').append("<li class='"+obj.name+"'><a href='#' class='active'><div class='media'><div class='pull-left'><img class='media-object img-circle' src='ppic.jpg'></div><div class='media-body'><p class='media-heading'><span class='badge badge-green time'><i class='"+deviceIcon+"'></i>"+obj.device+"</span>"+obj.name+"<span class='typing'></span></p>"+"</div></div></a></li>")
 				});
 
 				 $('#whisperList').empty();
@@ -111,7 +118,7 @@ $(function() {
 	  socket.on("isTyping", function(data) {
 	      if (data.isTyping) {
 		      if ($("#"+data.person+"").length === 0) {
-		       $('#chat-inbox').children("."+data.person).children().find('.typing').show().html('typing....');
+		       $('#chat-inbox').children("."+data.person).children().find('.typing').show().html(' typing.... <i class="fa fa-pencil"></i>');
 		        timeout = setTimeout(timeoutFunction, 5000);
 		      }
 		    } else {
@@ -150,7 +157,7 @@ $(function() {
 	  function chat(person, msg,self){
 	  	if(self) var classDiv = 'message sent';
 		else var classDiv = 'message receive';
-		$(".chat-list").append('<li class="'+classDiv+'"><div class="media"><div class="pull-left user-avatar"><img src="ppic.jpg" class="media-object img-circle"> </div><div class="media-body"><p class="media-heading"><a href="#">'+person.name+'</a></p><p>'+msg+'</p>   </div></div></li>');
+		$(".chat-list").append('<li class="'+classDiv+'"><div class="media"><div class="pull-left user-avatar"><img src="ppic.jpg" class="media-object img-circle"> </div><div class="media-body"><p class="media-heading"><a href="#">'+person.name+'</a></p><p>'+msg+'</p>   </div></div></li>').emoticonize(true);
 	    //clear typing field
 	     $(".chat-list").slimScroll({ scrollTo: $(".chat-list")[0].scrollHeight });
 	     clearTimeout(timeout);

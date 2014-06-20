@@ -4436,7 +4436,7 @@ padding: 10px 0;
 background-color: transparent;
 }
 .chat-reply {
-overflow: hidden;
+
 }
 .chat-reply textarea {
 width: 100%;
@@ -4647,6 +4647,7 @@ padding: 10px;
   margin: 0;
   padding: 0;
   float: right;
+  width:100%;
 }
 #headerMenuUl li{
   list-style: none;
@@ -4655,7 +4656,76 @@ color: #fff;
 float: left;
 font-size: 20px;
 }
+#usernameHolder{
+  float: right!important;
+}
+#logoHolder{
+  float: left;
+}
+#logoHolder .fa-paper-plane{
+  font-size: 1.2em;
+}
 #usernameHolder,#messageStack{
   font-weight: bold;
   
 }
+#usernameHolder .fa-user{
+  padding-right: 10px;
+}
+.media-heading .badge i{
+font-size: 13px;
+padding-right: 5px;
+padding-top: 1px;
+}
+.sendButtonContainer i{
+ padding-right: 5px;
+}
+.mbSmilesWrapper{
+  position:relative;
+  display:inline-block;
+  marginwidth-topmargin:15px;
+  width: 100%
+}
+
+    .mbSmilesBox{
+      position:absolute;
+      width:100%;
+      background:#f3f3f3;
+      padding:5px;
+      -moz-box-shadow: #666666 1px 1px 6px;
+      -webkit-box-shadow: #666666 1px 1px 6px;
+      margin-top:-196px;
+      z-index:1001;
+      height: 195px;
+    }
+    span.emoticon{
+      background-color:#f3f3f3;
+      display:block;
+      float:left;
+     /* width:25px;
+      height:25px;*/
+      cursor:pointer;
+      border-bottom:1px dotted #ccc;
+      border-right:1px dotted #ccc;
+      padding:3px;
+    }
+    span.emoticon:hover{
+      position:relative;
+      z-index:1;
+      background-color:#fff;
+      -moz-box-shadow: #666666 1px 1px 6px;
+      -webkit-box-shadow: #666666 1px 1px 6px;
+    }
+    
+    span.mbSmilesButton img{
+        width:12px;
+        height:12px;
+    }
+    span.mbSmilesButton{
+        position:absolute;
+        right:5px;
+        z-index:1000;
+    }
+    #render{
+      display: none;
+    }
