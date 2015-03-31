@@ -28,8 +28,8 @@ app.get('/', function(req, res){
     res.render('index.jade');
 });
 
-server.listen(port), function(){
-    console.log('Express server listening on  port ' + port);
+server.listen(port, function(){
+    console.log('Express server listening on port'+ port);
 
 });
 
