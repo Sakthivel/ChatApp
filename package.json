@@ -2,7 +2,7 @@
   "name": "chat",
   "version": "1.0.0",
   "description": "chat application",
-  "main": "app.js",
+  "main": "server.js",
   "dependencies": {
     "bootstrap": "^3.3.4",
     "express": "^4.12.3",
