@@ -9,13 +9,14 @@ var express 	= require('express'),
     moment = require('moment'),
     uuid = require('node-uuid'),
     Room = require('./room.js'),
+    port = process.env.PORT || 5000,
 
     gravatar    = require('gravatar'),
      _ = require('underscore')._;
 
 
-    app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 6565);
-    app.set('ipaddr', process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1");
+  /*  app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 6565);
+    app.set('ipaddr', process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1");*/
     app.use(express.static(__dirname + '/public'));
     app.set('views', __dirname + '/view');
     app.set('view engine', 'jade');
@@ -27,8 +28,8 @@ app.get('/', function(req, res){
     res.render('index.jade');
 });
 
-server.listen(app.get('port'), app.get('ipaddr'), function(){
-    console.log('Express server listening on  IP: ' + app.get('ipaddr') + ' and port ' + app.get('port'));
+server.listen(port), function(){
+    console.log('Express server listening on  port ' + port);
 
 });
 
