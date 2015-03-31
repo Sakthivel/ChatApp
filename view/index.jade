@@ -1,0 +1,79 @@
+doctype html
+html
+    head
+        meta(name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0")
+        link(rel="stylesheet", href="/bootstrap/dist/css/bootstrap.min.css")
+        link(rel="stylesheet", href="styles.css")
+        script(src='jquery/dist/jquery.js')
+        script(src='/bootstrap/dist/js/bootstrap.min.js')
+        script(src="moment.js")
+        script(src="jquery.slimscroll.min.js")
+        script(src="/socket.io/socket.io.js")
+        script(src="script.js")
+    body
+        div.container
+            div.row
+                div.loginContainer.center-block
+                    div.col-lg-6
+                        div.panel-body
+                            div.alert.alert-danger.hide#errorMsg
+                            form
+                                div.form-group
+                                    label Email address
+                                    input.form-control#useremail(type="email")
+
+                                div.form-group
+                                    label Nike name
+                                    input.form-control#username(type="text")
+                                p
+                                    button.btn.btn-primary.pull-right#loginEnterBtn(type="button") Enter
+                    div.col-lg-6
+                        span#connectingIndicator
+                    div.col-lg-12.well Conveying meaning to assistive technologie Using color to add meaning to a button only provides a visual indication, which will not be conveyed to users of assistive technologies – such as screen readers. Ensure that information denoted by the color is either obvious from the content itself (the visible text of the button), or is included through alternative means, such as additional text hidden with the .sr-only class.
+
+                div.chatContainer
+                    div.col-lg-12
+                        div.sidebar-left
+                            div.online-chat
+                                div.online-chat-container
+                                    div.chat-list
+                                        h3 Chat list
+                                        h5
+                                            span#peopleCount
+                                            span Friends Online
+                                    div.side-title
+                                        h2 online
+                                        div.title-border-row
+                                            div.title-border
+                                    ul.team-list.chat-list-side
+
+
+                        div.body-content
+                            div.header-section
+                                div.notification-wrap
+                                    div.right-notification
+                                        ul.notification-menu
+                                            li
+                                              a.btn.btn-default.dropdown-toggle(data-toggle="dropdown")
+                                               img#profilePic
+                                               i senthilnathan
+                                              span.fa.fa-angle-down
+                                              ul.dropdown-menu.dropdown-usermenu.purple.pull-right(role="menu")
+                                                 li
+                                                    a settings
+                                                 li
+                                                    a logout
+
+
+                            div.messageBody
+
+                                div#messageContainer
+                                   ol.discussion
+
+
+
+
+
+                            div.inputContainer
+                                input(type="text")#inputMessageTxt
+                                button.btn.btn-primary#sendMsgBtn Send

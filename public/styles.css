@@ -1,0 +1,476 @@
+@import url(//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic);
+@import url(//fonts.googleapis.com/css?family=Abel);
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    color: #323232;
+    line-height: 20px;
+    overflow-x: hidden;
+    font-size: 14px;
+    font-weight: 400;
+    text-rendering:optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+    background-color: #F7F7F7;
+}
+
+
+input,select,textarea {
+    font-family: 'Source Sans Pro', sans-serif;
+    color: #767676;
+}
+
+a {
+    /*color: #91918E;*/
+}
+
+a:focus, a:active, a:hover {
+    outline: none;
+    -webkit-transition:all 0.3s;
+    -moz-transition:all 0.3s;
+    transition:all 0.3s;
+    text-decoration: none;
+    color: #7cd8a9;
+}
+
+h1,h2,h3,h4,h5 {
+    font-family: 'Source Sans Pro', sans-serif;
+}
+.well {
+    border-radius: 0px;
+    margin-bottom: 0;
+}
+
+.center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.loginContainer {
+    width: 800px;
+    margin-top: 100px;
+    position: relative;
+    border-radius: 3px;
+    border: 0;
+    background-color: #fff;
+    box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.26);
+    overflow: hidden;
+}
+
+.sidebar-left {
+    width: 240px;
+    left: 0;
+    background-color:#fff ;
+    padding: 10px;
+    position: absolute;
+}
+.logo {
+    height: 60px;
+    line-height: 60px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 240px;
+    z-index: 100;
+    padding-left: 20px;
+}
+.chat-list {
+    position: relative;
+    margin-bottom: 20px;
+}
+.chat-list h3 {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #000;
+    margin: 0 0 5px;
+}
+.chat-list h5 {
+    font-size: 12px;
+    color: #a5a5a5;
+    margin: 0;
+}
+
+.side-title {
+    display: table;
+    overflow: hidden;
+    padding: 10px 0px;
+    text-transform: uppercase;
+    color: #FF6C60;
+}
+.side-title h2 {
+    float: left;
+    padding: 0 10px 0 0;
+    margin: 0;
+    font-size: 14px;
+    text-transform: uppercase;
+    color: #2b2b2c;
+    font-weight: bold;
+}
+.side-title .title-border-row {
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    height: 1px;
+    width: 100%;
+}
+.side-title .title-border {
+    height: 1px;
+    border-top: 1px solid #e8e8e8;
+    position: relative;
+    display: block;
+    width: 100%;
+    box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    -o-box-sizing: content-box;
+}
+.team-list.chat-list-side {
+    margin: 0 -20px 20px -20px;
+}
+.team-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.team-list.chat-list-side li a {
+    display: table;
+    padding: 10px 20px;
+    border: none;
+    position: relative;
+}
+.team-list li a {
+    display: inline-block;
+    width: 100%;
+    padding: 14px 15px;
+    border-bottom: 1px solid #f3f3f3;
+    color: #333;
+}
+.team-list.chat-list-side li .thumb-small, .team-list.chat-list-side li .inline {
+    display: table-cell;
+    float: none;
+    vertical-align: middle;
+}
+.team-list.chat-list-side li .thumb-small {
+    margin-top: 5px;
+}
+.team-list.chat-list-side li .thumb-small {
+    width: 30px;
+    height: 30px;
+}
+.team-list li .thumb-small {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    position: relative;
+}
+.team-list li a span {
+    display: inline-block;
+    margin-right: 10px;
+}
+.team-list li .thumb-small img {
+    width: 100%;
+    height: auto;
+}
+.circle {
+    border-radius: 50%;
+}
+.team-list.chat-list-side li .thumb-small .dot {
+    right: -3px;
+    top: 0px;
+}
+.team-list li .thumb-small .dot.online {
+    background: #5cc691;
+}
+.team-list li .thumb-small .dot {
+    width: 12px;
+    height: 12px;
+    display: inline-block;
+    position: absolute;
+    background: #e6e6e6;
+    border-radius: 50%;
+    top: auto;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    border: 2px solid #fff;
+}
+.team-list.chat-list-side li .inline {
+    padding-left: 20px;
+    text-align: left;
+}
+.team-list.chat-list-side li .thumb-small, .team-list.chat-list-side li .inline {
+    display: table-cell;
+    float: none;
+    vertical-align: middle;
+}
+.team-list.chat-list-side li .name {
+    margin-top: 0;
+    font-size: 14px;
+    color: #2b2b2c;
+}
+.team-list li .name {
+    margin-top: 15px;
+    display: inline-block;
+}
+.team-list li a span {
+    display: inline-block;
+    margin-right: 10px;
+}
+.inline small {
+    display: block;
+}
+.body-content {
+    margin-left: 225px;
+    background: #f3f3f3;
+    min-height: 500px;
+    position: relative;
+    border-left: 1px solid #E8E8E8;
+}
+.header-section {
+    background: #fff;
+    border-bottom: 1px solid #E8E8E8;
+    float: left;
+    width: 100%;
+}
+.messageBody{
+    padding: 20px 10px 20px 10px;
+    float: left;
+    width: 100%;
+}
+.chatContainer {
+display: none;
+    margin-top: 50px;
+}
+
+.right-notification {
+    margin-right: 0px;
+}
+.right-notification {
+    float: right;
+    margin-right: 40px;
+    height: 60px;
+}
+.notification-menu {
+    list-style: none;
+    padding-left: 0px;
+}
+.notification-menu > li {
+    float: left;
+    position: relative;
+}
+.right-notification .notification-menu li a {
+    color: #8b8b8b;
+}
+.right-notification .notification-menu li a {
+    height: 60px;
+    line-height: 60px;
+    padding: 0 15px;
+}
+.right-notification .notification-menu > li > a {
+    /* padding-top: 15px; */
+    /* padding-bottom: 16px; */
+}
+.notification-menu .dropdown-toggle {
+    padding: 12px 10px;
+    border-color: #fff;
+    background: none;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    border: none;
+}
+.right-notification .notification-menu > li > a > img {
+    width: 29px;
+    height: 29px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.right-notification .notification-menu > li > a > span.fa-angle-down {
+    margin-left: 5px;
+}
+.notification-menu .dropdown-menu {
+    padding: 0;
+}
+.dropdown-usermenu.purple {
+    border-top: 1px solid #9c78cd;
+}
+.notification-menu .dropdown-menu {
+    margin-top: 0px;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-top: 1px solid rgba(0,0,0,0);
+    border-left: 1px solid #ececec;
+    border-right: 1px solid #ececec;
+    border-bottom: 1px solid #ececec;
+}
+.notification-menu .dropdown-usermenu li {
+    padding: 0;
+}
+.notification-menu .dropdown-menu li {
+    display: block;
+    margin: 0;
+    float: none;
+    background: none;
+}
+.right-notification .notification-menu li li a {
+    height: auto;
+    line-height: normal;
+    padding: 15px;
+}
+.right-notification .notification-menu li a {
+    color: #8b8b8b;
+}
+.right-notification .notification-menu li a {
+    height: 60px;
+    line-height: 60px;
+    padding: 0 15px;
+}
+.notification-menu .dropdown-menu li a {
+    color: #666;
+    font-size: 13px;
+    padding: 7px 10px;
+    -moz-transition: all 0.2s ease-out 0s;
+    -webkit-transition: all 0.2s ease-out 0s;
+    transition: all 0.2s ease-out 0s;
+}
+.inputContainer {
+    background: #e8e8e8;
+    border-bottom: 1px solid #E8E8E8;
+    float: left;
+    width: 100%;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+}
+.inputContainer #inputMessageTxt{
+    width: 90%;
+}
+.inputContainer #sendMsgBtn{
+    width: 10%;
+    padding: 0px;
+    border-radius: 0;
+    line-height: 24px;
+    margin-top: -3px;
+}
+
+.discussion {
+    margin: 0!important;
+    padding: 0!important;
+   /* display: inline-block;*/
+}
+.discussion li.messages-date {
+    display: inline-block;
+    color: #8e8e93;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1;
+    margin: 10px 0;
+    text-align: center;
+    width: 100%!important;
+}
+.discussion li {
+    position: relative;
+    margin: 0 0 10px;
+    width: 80%;
+    list-style: none;
+    font-family: 'Source Sans Pro', sans-serif;
+}
+.calWell, .discussion .other, .discussion .other .message {
+    float: left;
+}
+.discussion .self {
+    float: right;
+}
+.discussion .self .message {
+    float: right;
+}
+.discussion .message {
+    margin: 1px 10px 0;
+    clear: both;
+}
+.discussion .self .message-name {
+    margin-left: auto!important;
+    margin-right: 48px;
+    text-align: right;
+}
+.discussion .other .message:first-child .message-name {
+    display: block!important;
+}
+.discussion .other .message:last-child .message-name {
+    display: none;
+}
+.discussion .message-name {
+    color: #8e8e93;
+    font-size: 12px;
+    line-height: 1;
+    margin-bottom: 2px;
+    margin-top: 7px;
+    margin-left: 48px;
+
+}
+.discussion .self .message:last-child .message-text {
+    border-radius: 16px 16px 0;
+    float: left;
+}
+.discussion .self .message-text {
+    background-color: #00d449;
+    color: #fff;
+    padding-right: 22px;
+    margin-right: 32px;
+}
+.discussion .message-text {
+    border-radius: 16px;
+    font-size: 15px;
+    line-height: 1.2;
+    min-height: 30px;
+    min-width: 48px;
+    padding: 6px 16px 9px;
+}
+.discussion .self .message:last-child .message-avatar {
+    display: block;
+}
+.discussion .self .message-avatar {
+    float: right;
+    right: 10px;
+}
+.discussion .message-avatar {
+    display: none;
+    position: absolute;
+    bottom: -5px;
+    height: 29px;
+    width: 29px;
+}
+.discussion .other .message:first-child .message-name {
+    display: block!important;
+}
+.discussion .other .message:last-child .message-name {
+    display: none;
+}
+.discussion .other .message:last-child .message-text {
+    border-radius: 16px 16px 16px 0;
+    float: left;
+}
+.discussion .other .message-text {
+    background-color: #e5e5ea;
+    color: #2C2F3B;
+    padding-left: 22px;
+    margin-left: 32px;
+}
+.discussion .other .message:last-child .message-avatar {
+    display: block;
+}
+.discussion .other .message-avatar {
+    left: 10px;
+}
+.discussion .message-avatar img {
+    border-radius: 100%;
+    width: 100%;
+}
+.discussion .time{
+    padding-left: 10px;
+}
